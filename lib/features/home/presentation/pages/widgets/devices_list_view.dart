@@ -8,7 +8,12 @@ class DevicesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return const DeviceListViewItem();
+        return DeviceListViewItem(
+          deviceName: "لابتوب",
+          price: "5000",
+          onDelete: () {},
+          onEdit: () {},
+        );
       },
     );
   }
