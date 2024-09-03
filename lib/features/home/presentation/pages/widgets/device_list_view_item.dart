@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class DeviceListViewItem extends StatelessWidget {
   final String deviceName;
-  final String price;
+  final double price;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
@@ -26,7 +26,9 @@ class DeviceListViewItem extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (_) {},
+              onPressed: (context) {
+                onEdit();
+              },
               backgroundColor: Color(0xffF9E6B1),
               foregroundColor: Colors.amber,
               icon: Icons.edit_outlined,
@@ -44,7 +46,9 @@ class DeviceListViewItem extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (_) {},
+              onPressed: (context) {
+                onDelete();
+              },
               backgroundColor: Color(0xffFFD8D1),
               foregroundColor: Colors.red,
               icon: Icons.delete_outlined,
@@ -81,7 +85,7 @@ class DeviceListViewItem extends StatelessWidget {
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
               ),
               subtitle: Text(
-                price,
+                "$price",
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),

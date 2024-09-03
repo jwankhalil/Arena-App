@@ -31,7 +31,7 @@ Future<dynamic> showReservationSheet(BuildContext context) {
                   borderRadius: BorderRadius.circular(3),
                 ),
               ),
-              const CustomTextfield(label: 'اسم الزبون'),
+              // const CustomTextfield(label: 'اسم الزبون'),
               const SizedBox(
                 height: 16,
               ),
