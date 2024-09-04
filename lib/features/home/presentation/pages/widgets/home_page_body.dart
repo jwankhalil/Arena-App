@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:arena_management/features/home/presentation/manager/cubit/device_cubit.dart';
+import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:arena_management/features/home/presentation/pages/widgets/add_device_bottom_sheet_widget.dart';

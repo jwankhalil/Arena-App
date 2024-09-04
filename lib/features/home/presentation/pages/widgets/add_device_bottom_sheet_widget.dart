@@ -1,5 +1,5 @@
 import 'package:arena_management/features/home/data/models/device_model.dart';
-import 'package:arena_management/features/home/presentation/manager/cubit/device_cubit.dart';
+import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/custom_text_field.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/save_device_button.dart';
 import 'package:flutter/material.dart';
@@ -83,8 +83,8 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
                       controller: priceController,
                     ),
                     const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         // Validate inputs
                         if (nameController.text.isNotEmpty &&
                             priceController.text.isNotEmpty &&
@@ -109,11 +109,21 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
                               content: Text('Please enter valid data')));
                         }
                       },
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.black,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(18)),
+                        child: const Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Center(
+                              child: Text(
+                            "save",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          )),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ],

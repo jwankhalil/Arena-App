@@ -1,5 +1,5 @@
 import 'package:arena_management/features/home/data/models/device_model.dart';
-import 'package:arena_management/features/home/presentation/manager/cubit/device_cubit.dart';
+import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/add_device_bottom_sheet_widget.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/custom_text_field.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/device_list_view_item.dart';
