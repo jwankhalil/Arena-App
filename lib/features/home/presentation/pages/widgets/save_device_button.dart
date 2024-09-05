@@ -1,3 +1,4 @@
+import 'package:arena_management/core/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
 class SaveButton extends StatelessWidget {
@@ -8,7 +9,8 @@ class SaveButton extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-          color: Colors.green, borderRadius: BorderRadius.circular(18)),
+          color: AppColor.primaryColor,
+          borderRadius: BorderRadius.circular(18)),
       child: const Center(
         child: Padding(
           padding: const EdgeInsets.all(12),

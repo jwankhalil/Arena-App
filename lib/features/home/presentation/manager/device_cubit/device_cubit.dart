@@ -24,7 +24,6 @@ class DeviceCubit extends Cubit<DeviceState> {
     this.editDeviceUseCase,
   ) : super(DevicesLoading());
 
-  // This method loads the devices and emits new states.
   void loadDevices() async {
     emit(DevicesLoading());
     try {
@@ -36,8 +35,8 @@ class DeviceCubit extends Cubit<DeviceState> {
   }
 
   void addDevice(DeviceModel device) async {
-    await addDeviceUseCase(device); // Add the device to the repository
-    loadDevices(); // Reload the list to reflect the new addition
+    await addDeviceUseCase(device);
+    loadDevices();
   }
 
   void deleteDevice(String deviceId) async {

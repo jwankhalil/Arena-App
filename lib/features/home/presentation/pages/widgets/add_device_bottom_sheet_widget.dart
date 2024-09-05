@@ -1,3 +1,4 @@
+import 'package:arena_management/core/utils/app_color.dart';
 import 'package:arena_management/features/home/data/models/device_model.dart';
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/custom_text_field.dart';
@@ -14,7 +15,7 @@ class AddDeviceBottomSheet extends StatefulWidget {
 
 class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
   String _deviceName = '';
-  String _selectedDeviceType = 'PC'; // Default value
+  String _selectedDeviceType = 'PC';
   String _devicePrice = '';
   final List<String> _deviceTypes = ['PC', 'PlayStation', 'Xbox'];
 
@@ -85,44 +86,40 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
                     const SizedBox(height: 24),
                     GestureDetector(
                       onTap: () {
-                        // Validate inputs
                         if (nameController.text.isNotEmpty &&
                             priceController.text.isNotEmpty &&
                             double.tryParse(priceController.text) != null) {
                           final newDevice = DeviceModel(
-                            deviceId: DateTime.now()
-                                .toString(), // Generate a unique ID
+                            deviceId: DateTime.now().toString(),
                             deviceName: nameController.text,
                             deviceType: _selectedDeviceType,
                             price: double.parse(priceController.text),
-                            status: 0, // Default to available
+                            status: 0,
                           );
 
-                          // Add the device using Cubit
                           context.read<DeviceCubit>().addDevice(newDevice);
 
-                          // Close the bottom sheet
                           Navigator.pop(context);
                         } else {
-                          // Show an error if inputs are not valid
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text('Please enter valid data')));
                         }
                       },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(18)),
-                        child: const Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Center(
-                              child: Text(
-                            "save",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          )),
-                        ),
-                      ),
+                      child: const SaveButton(),
+                      // child: Container(
+                      //   width: MediaQuery.of(context).size.width,
+                      //   decoration: BoxDecoration(
+                      //       color: AppCo,
+                      //       borderRadius: BorderRadius.circular(18)),
+                      //   child: const Padding(
+                      //     padding: const EdgeInsets.all(12),
+                      //     child: Center(
+                      //         child: Text(
+                      //       "حفظ",
+                      //       style: TextStyle(fontSize: 20, color: Colors.white),
+                      //     )),
+                      //   ),
+                      // ),
                     )
                   ],
                 ),
@@ -131,7 +128,7 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
           ),
         );
       },
-      backgroundColor: Colors.green,
+      backgroundColor: AppColor.primaryColor,
       child: const Icon(
         Icons.add,
         color: Colors.white,

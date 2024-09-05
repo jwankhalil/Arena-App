@@ -8,6 +8,7 @@ import 'package:arena_management/features/home/presentation/pages/widgets/save_d
 
 class DeviceListViewItem extends StatefulWidget {
   final String deviceName;
+  final String deviceType;
   final double price;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
@@ -15,6 +16,7 @@ class DeviceListViewItem extends StatefulWidget {
   const DeviceListViewItem({
     Key? key,
     required this.deviceName,
+    required this.deviceType,
     required this.price,
     required this.onEdit,
     required this.onDelete,
@@ -27,7 +29,7 @@ class DeviceListViewItem extends StatefulWidget {
 class _DeviceListViewItemState extends State<DeviceListViewItem> {
   bool isSessionActive = false;
   String customerName = '';
-  DateTime? sessionStartTime; // Store session start time
+  DateTime? sessionStartTime;
   double totalCost = 0.0;
 
   TextEditingController customerNameController = TextEditingController();
@@ -90,7 +92,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 0.8,
                   blurRadius: 3,
-                  offset: const Offset(0, 0), // Changes position of the shadow
+                  offset: const Offset(0, 0),
                 ),
               ],
               borderRadius: BorderRadius.circular(12),
@@ -106,12 +108,10 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
-              leading: const Icon(Icons.label_outline_sharp),
+              leading: _getIconBasedOnDeviceType(),
               trailing: Icon(
                 Icons.circle_rounded,
-                color: isSessionActive
-                    ? Colors.red
-                    : Colors.green, // Change color based on session status
+                color: isSessionActive ? Colors.red : Colors.green,
               ),
             ),
           ),
@@ -120,7 +120,6 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
     );
   }
 
-  // Method to start a new session
   void _startNewSession() {
     showModalBottomSheet(
       context: context,
@@ -186,7 +185,19 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
     );
   }
 
-  // Method to show the session end dialog
+  Icon _getIconBasedOnDeviceType() {
+    switch (widget.deviceType) {
+      case 'PC':
+        return Icon(Icons.computer);
+      case 'PlayStation':
+        return Icon(Icons.sports_esports);
+      case 'Xbox':
+        return Icon(Icons.gamepad);
+      default:
+        return Icon(Icons.device_unknown);
+    }
+  }
+
   void _showEndSessionDialog() {
     showModalBottomSheet(
       context: context,
@@ -246,7 +257,6 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
     );
   }
 
-  // Method to end the session and calculate the price
   void _endSessionAndCalculatePrice() {
     if (sessionStartTime != null) {
       final DateTime sessionEndTime = DateTime.now();
@@ -261,7 +271,6 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
         sessionStartTime = null;
       });
 
-      // Show the cost in a dialog
       showDialog(
         context: context,
         builder: (context) => AlertDialog(

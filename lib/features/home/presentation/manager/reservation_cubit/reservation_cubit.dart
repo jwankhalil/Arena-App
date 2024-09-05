@@ -36,10 +36,10 @@ class ReservationCubit extends Cubit<ReservationState> {
       emit(ReservationLoading());
 
       final reservation = ReservationModel(
-        id: UniqueKey().toString(), // Generate a unique ID
+        id: UniqueKey().toString(),
         deviceId: deviceId,
         startTime: DateTime.now(),
-        endTime: DateTime.now(), // Set endTime same as startTime initially
+        endTime: DateTime.now(),
       );
 
       await addReservationUseCase.call(reservation);
@@ -54,10 +54,8 @@ class ReservationCubit extends Cubit<ReservationState> {
     try {
       emit(ReservationLoading());
 
-      // Retrieve the reservation
       final reservation = await repository.getReservationById(deviceId);
       if (reservation != null) {
-        // Update the end time to now
         final updatedReservation = ReservationModel(
           id: reservation.id,
           deviceId: reservation.deviceId,
@@ -65,10 +63,8 @@ class ReservationCubit extends Cubit<ReservationState> {
           endTime: DateTime.now(),
         );
 
-        // Calculate the cost
         final calculatedCost = updatedReservation.calculateCost(pricePerHour);
 
-        // Update the reservation in Hive
         await repository.updateReservation(updatedReservation);
 
         emit(ReservationEnded(deviceId, calculatedCost));

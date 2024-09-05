@@ -12,6 +12,8 @@ import 'package:arena_management/features/home/domain/use_cases/reservaiation_us
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:arena_management/features/home/presentation/manager/reservation_cubit/reservation_cubit.dart';
 import 'package:arena_management/features/home/presentation/pages/home_page.dart';
+import 'package:arena_management/features/home/splash/presentation/pages/splash_page.dart';
+import 'package:arena_management/router/app_router.dart';
 // import 'package:arena_management/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
           )..loadReservations(),
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         locale: const Locale('ar'),
         localizationsDelegates: const [
           S.delegate,
@@ -73,7 +75,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: S.delegate.supportedLocales,
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        routerConfig: AppRouter.router,
       ),
     );
   }

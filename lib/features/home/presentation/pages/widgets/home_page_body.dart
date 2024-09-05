@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:arena_management/core/utils/assets_data.dart';
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,6 @@ class _HomePageBodyState extends State<HomePageBody> {
   void initState() {
     super.initState();
 
-    // Initialize controllers and fields with default values or values from the passed device
     _nameController =
         TextEditingController(text: widget.device?.deviceName ?? '');
     _priceController =
@@ -48,15 +48,18 @@ class _HomePageBodyState extends State<HomePageBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
           title: const Text(
             "الأجهزة",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           elevation: 0,
           forceMaterialTransparency: true,
-        ),
-        body: const DevicesListView(),
-        floatingActionButton: const AddDeviceBottomSheet());
+          actions: [
+            Image.asset(AssetsData.logo),
+          ]),
+      body: const DevicesListView(),
+      floatingActionButton: const AddDeviceBottomSheet(),
+    );
   }
 }

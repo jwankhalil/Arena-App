@@ -23,26 +23,25 @@ class DevicesListView extends StatelessWidget {
             itemBuilder: (context, index) {
               final device = state.devices[index];
               return DeviceListViewItem(
+                  // deviceId: device.deviceId,
                   deviceName: device.deviceName,
+                  deviceType: device.deviceType,
                   price: device.price,
                   onDelete: () {
                     context.read<DeviceCubit>().deleteDevice(device.deviceId);
                   },
                   onEdit: () {
-                    // Controllers for text fields
                     final TextEditingController _nameController =
                         TextEditingController(text: device.deviceName);
                     final TextEditingController _priceController =
                         TextEditingController(text: device.price.toString());
 
-                    // List of device types
                     final List<String> _deviceTypes = [
                       'PC',
                       'PlayStation',
                       'Xbox'
                     ];
 
-                    // Selected device type
                     String _selectedDeviceType = device.deviceType;
 
                     editModalListView(context, _nameController, _deviceTypes,
@@ -126,25 +125,21 @@ class DevicesListView extends StatelessWidget {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    // Validate inputs
                     if (_nameController.text.isNotEmpty &&
                         _priceController.text.isNotEmpty &&
                         double.tryParse(_priceController.text) != null) {
                       final updatedDevice = DeviceModel(
-                        deviceId: device.deviceId, // Keep the existing ID
+                        deviceId: device.deviceId,
                         deviceName: _nameController.text,
                         deviceType: _selectedDeviceType,
                         price: double.parse(_priceController.text),
-                        status: device.status, // Keep the current status
+                        status: device.status,
                       );
 
-                      // Use Cubit to update the device
                       context.read<DeviceCubit>().editDevice(updatedDevice);
 
-                      // Close the bottom sheet
                       Navigator.pop(context);
                     } else {
-                      // Show an error if inputs are not valid
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Please enter valid data'),
                       ));
