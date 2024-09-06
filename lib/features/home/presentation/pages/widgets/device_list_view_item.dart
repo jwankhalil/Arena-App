@@ -1,25 +1,37 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:arena_management/core/functions/show_reservation_sheet.dart';
+import 'package:arena_management/core/utils/app_color.dart';
+
 import 'package:arena_management/features/home/presentation/pages/widgets/custom_text_field.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/save_device_button.dart';
 
 class DeviceListViewItem extends StatefulWidget {
+  final String deviceId;
   final String deviceName;
   final String deviceType;
   final double price;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
+  final int statues;
+  final DateTime start;
+  final DateTime end;
   const DeviceListViewItem({
     Key? key,
+    required this.deviceId,
     required this.deviceName,
     required this.deviceType,
     required this.price,
     required this.onEdit,
     required this.onDelete,
+    required this.statues,
+    required this.start,
+    required this.end,
   }) : super(key: key);
 
   @override
@@ -78,7 +90,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
         ),
         child: GestureDetector(
           onTap: () {
-            if (isSessionActive) {
+            if (widget.statues == 1) {
               _showEndSessionDialog();
             } else {
               _startNewSession();
@@ -111,7 +123,8 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
               leading: _getIconBasedOnDeviceType(),
               trailing: Icon(
                 Icons.circle_rounded,
-                color: isSessionActive ? Colors.red : Colors.green,
+                color: widget.statues == 0 ? Colors.green : Colors.red,
+                // color: isSessionActive ? Colors.red : Colors.green,
               ),
             ),
           ),
@@ -137,7 +150,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
         child: Wrap(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
@@ -153,27 +166,72 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                   label: 'اسم الزبون',
                   controller: customerNameController,
                 ),
+                GestureDetector(
+                  onTap: () {
+                    showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                      builder: (BuildContext context, Widget? child) {
+                        return Theme(
+                          data: ThemeData.light().copyWith(
+                            colorScheme: const ColorScheme.light(
+                              primary: Colors.green,
+                              onPrimary: Colors.white,
+                              onSurface: Colors.black,
+                            ),
+                            dialogBackgroundColor: Colors.white,
+                          ),
+                          child: Text("data"),
+                        );
+                      },
+                    );
+                  },
+                  child: const Text(
+                    'حدد الوقت',
+                  ),
+                ),
                 const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("عودة"),
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isSessionActive = true;
+                              customerName = customerNameController.text;
+                              sessionStartTime = DateTime.now();
+                            });
+
+                            context.read<DeviceCubit>().updateDeviceStatus(
+                                widget.deviceId, 1,
+                                startTime: widget.start);
+                          },
+                          child: SaveButton(text: "بدء الجلسة")),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isSessionActive = true;
-                          customerName = customerNameController.text;
-                          sessionStartTime =
-                              DateTime.now(); // Start the session time
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: const Text("بدء الجلسة"),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red),
+                                borderRadius: BorderRadius.circular(18)),
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Center(
+                                child: Text(
+                                  "عودة ",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.red),
+                                ),
+                              ),
+                            )),
+                      ),
                     ),
                   ],
                 ),
@@ -183,19 +241,6 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
         ),
       ),
     );
-  }
-
-  Icon _getIconBasedOnDeviceType() {
-    switch (widget.deviceType) {
-      case 'PC':
-        return Icon(Icons.computer);
-      case 'PlayStation':
-        return Icon(Icons.sports_esports);
-      case 'Xbox':
-        return Icon(Icons.gamepad);
-      default:
-        return Icon(Icons.device_unknown);
-    }
   }
 
   void _showEndSessionDialog() {
@@ -235,17 +280,55 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("عودة"),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          context
+                              .read<DeviceCubit>()
+                              .updateDeviceStatus(widget.deviceId, 0);
+
+                          Navigator.of(context).pop();
+                          _endSessionAndCalculatePrice();
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.primaryColor,
+                                borderRadius: BorderRadius.circular(18)),
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Center(
+                                child: Text(
+                                  "إغلاق الجلسة",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                              ),
+                            )),
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _endSessionAndCalculatePrice();
-                      },
-                      child: const Text("إغلاق الجلسة"),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red),
+                                borderRadius: BorderRadius.circular(18)),
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Center(
+                                child: Text(
+                                  "عودة ",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.red),
+                                ),
+                              ),
+                            )),
+                      ),
                     ),
                   ],
                 ),
@@ -258,17 +341,16 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
   }
 
   void _endSessionAndCalculatePrice() {
-    if (sessionStartTime != null) {
+    if (widget.start != null) {
+      print("${widget.start}");
       final DateTime sessionEndTime = DateTime.now();
-      final Duration sessionDuration =
-          sessionEndTime.difference(sessionStartTime!);
+      final Duration sessionDuration = sessionEndTime.difference(widget.start);
       final double hoursSpent = sessionDuration.inMinutes / 60;
       final double calculatedCost = hoursSpent * widget.price;
 
       setState(() {
         isSessionActive = false;
         totalCost = calculatedCost;
-        sessionStartTime = null;
       });
 
       showDialog(
@@ -293,6 +375,19 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
           content: Text("لا توجد جلسة حالية لحساب السعر."),
         ),
       );
+    }
+  }
+
+  Icon _getIconBasedOnDeviceType() {
+    switch (widget.deviceType) {
+      case 'PC':
+        return Icon(Icons.computer);
+      case 'PlayStation':
+        return Icon(Icons.sports_esports);
+      case 'Xbox':
+        return Icon(Icons.gamepad);
+      default:
+        return Icon(Icons.device_unknown);
     }
   }
 }

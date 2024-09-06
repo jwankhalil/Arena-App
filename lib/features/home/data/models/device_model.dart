@@ -13,13 +13,15 @@ class DeviceModel extends HiveObject {
   final double price;
   @HiveField(4)
   final int status;
-
+  @HiveField(5)
+  DateTime? startTime;
   DeviceModel(
       {required this.deviceId,
       required this.deviceName,
       required this.deviceType,
       required this.price,
-      required this.status});
+      required this.status,
+      this.startTime});
 
   bool isAvailable() => status == 0;
 }

@@ -22,13 +22,14 @@ class DeviceModelAdapter extends TypeAdapter<DeviceModel> {
       deviceType: fields[2] as String,
       price: fields[3] as double,
       status: fields[4] as int,
+      startTime: fields[5] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, DeviceModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.deviceId)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class DeviceModelAdapter extends TypeAdapter<DeviceModel> {
       ..writeByte(3)
       ..write(obj.price)
       ..writeByte(4)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(5)
+      ..write(obj.startTime);
   }
 
   @override

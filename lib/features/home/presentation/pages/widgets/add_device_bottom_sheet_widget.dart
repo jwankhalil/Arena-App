@@ -105,21 +105,9 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
                               content: Text('Please enter valid data')));
                         }
                       },
-                      child: const SaveButton(),
-                      // child: Container(
-                      //   width: MediaQuery.of(context).size.width,
-                      //   decoration: BoxDecoration(
-                      //       color: AppCo,
-                      //       borderRadius: BorderRadius.circular(18)),
-                      //   child: const Padding(
-                      //     padding: const EdgeInsets.all(12),
-                      //     child: Center(
-                      //         child: Text(
-                      //       "حفظ",
-                      //       style: TextStyle(fontSize: 20, color: Colors.white),
-                      //     )),
-                      //   ),
-                      // ),
+                      child: const SaveButton(
+                        text: 'حفظ',
+                      ),
                     )
                   ],
                 ),
