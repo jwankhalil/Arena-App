@@ -3,6 +3,7 @@ import 'package:arena_management/features/home/presentation/manager/device_cubit
 
 import 'package:arena_management/features/home/presentation/pages/widgets/custom_text_field.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/device_list_view_item.dart';
+import 'package:arena_management/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -100,13 +101,13 @@ Future<dynamic> editModalListView(
                 ),
               ),
               CustomTextfield(
-                label: 'اسم الجهاز',
+                label: S.of(context).deviceName,
                 controller: _nameController,
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                  labelText: 'نوع الجهاز',
+                decoration: InputDecoration(
+                  labelText: S.of(context).deviceType,
                   border: OutlineInputBorder(),
                 ),
                 value: _deviceTypes.contains(_selectedDeviceType)
@@ -124,7 +125,7 @@ Future<dynamic> editModalListView(
               ),
               const SizedBox(height: 16),
               CustomTextfield(
-                label: 'سعر الساعة',
+                label: S.of(context).devicePrice,
                 controller: _priceController,
               ),
               const SizedBox(height: 24),

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
+import 'package:arena_management/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -62,7 +63,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
               backgroundColor: const Color(0xffF9E6B1),
               foregroundColor: Colors.amber,
               icon: Icons.edit_outlined,
-              label: 'Edit',
+              label: S.of(context).edit,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 bottomLeft: Radius.circular(12),
@@ -80,7 +81,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
               backgroundColor: const Color(0xffFFD8D1),
               foregroundColor: Colors.red,
               icon: Icons.delete_outlined,
-              label: 'Delete',
+              label: S.of(context).delete,
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(12),
                 bottomRight: Radius.circular(12),
@@ -116,7 +117,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
               ),
               subtitle: Text(
-                "${widget.price} ل.س / ساعة",
+                "${widget.price} ${S.of(context).currency}",
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
@@ -163,7 +164,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                   ),
                 ),
                 CustomTextfield(
-                  label: 'اسم الزبون',
+                  label: S.of(context).customerName,
                   controller: customerNameController,
                 ),
                 GestureDetector(
@@ -186,8 +187,8 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                       },
                     );
                   },
-                  child: const Text(
-                    'حدد الوقت',
+                  child: Text(
+                    S.of(context).date,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -207,7 +208,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                                 widget.deviceId, 1,
                                 startTime: widget.start);
                           },
-                          child: SaveButton(text: "بدء الجلسة")),
+                          child: SaveButton(text: S.of(context).startSession)),
                     ),
                     const SizedBox(
                       width: 5,
@@ -221,11 +222,11 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.red),
                                 borderRadius: BorderRadius.circular(18)),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(12.0),
                               child: Center(
                                 child: Text(
-                                  "عودة ",
+                                  S.of(context).back,
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.red),
                                 ),
@@ -273,7 +274,7 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                   ),
                 ),
                 CustomTextfield(
-                  label: 'اسم الزبون',
+                  label: S.of(context).customerName,
                   controller: TextEditingController(text: customerName),
                 ),
                 const SizedBox(height: 24),
@@ -294,11 +295,11 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                             decoration: BoxDecoration(
                                 color: AppColor.primaryColor,
                                 borderRadius: BorderRadius.circular(18)),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(12.0),
                               child: Center(
                                 child: Text(
-                                  "إغلاق الجلسة",
+                                  S.of(context).endSession,
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
@@ -318,11 +319,11 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.red),
                                 borderRadius: BorderRadius.circular(18)),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(12.0),
                               child: Center(
                                 child: Text(
-                                  "عودة ",
+                                  S.of(context).back,
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.red),
                                 ),
@@ -357,14 +358,14 @@ class _DeviceListViewItemState extends State<DeviceListViewItem> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('تم إغلاق الجلسة'),
-          content:
-              Text('حساب الزبون: ${calculatedCost.toStringAsFixed(2)} ل.س'),
+          content: Text(
+              '${S.of(context).customerBill} : ${calculatedCost.toStringAsFixed(2)} ل.س'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('إغلاق'),
+              child: Text(S.of(context).close),
             ),
           ],
         ),

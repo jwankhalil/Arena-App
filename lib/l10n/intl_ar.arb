@@ -1,3 +1,17 @@
 {
-    "title": "الأجهزة"
+    "title": "الأجهزة",
+    "deviceName":"اسم الجهاز",
+    "deviceType":"نوع الجهاز",
+    "devicePrice":"سعر الجهاز",
+    "customerName":"اسم الزبون",
+    "startSession":"بدء الجلسة",
+    "back":"عودة",
+    "endSession":"اغلاق الجلسة",
+    "delete":"حذف",
+    "edit":"تعديل",
+    "currency": "ل.س / ساعة",
+    "date":"اختر الوقت",
+    "close":"اغلاق",
+    "customerBill":"حساب الزبون"
+
 }

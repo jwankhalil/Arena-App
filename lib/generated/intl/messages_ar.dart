@@ -22,6 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "back": MessageLookupByLibrary.simpleMessage("عودة"),
+        "close": MessageLookupByLibrary.simpleMessage("اغلاق"),
+        "currency": MessageLookupByLibrary.simpleMessage("ل.س / ساعة"),
+        "customerBill": MessageLookupByLibrary.simpleMessage("حساب الزبون"),
+        "customerName": MessageLookupByLibrary.simpleMessage("اسم الزبون"),
+        "date": MessageLookupByLibrary.simpleMessage("اختر الوقت"),
+        "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+        "deviceName": MessageLookupByLibrary.simpleMessage("اسم الجهاز"),
+        "devicePrice": MessageLookupByLibrary.simpleMessage("سعر الجهاز"),
+        "deviceType": MessageLookupByLibrary.simpleMessage("نوع الجهاز"),
+        "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
+        "endSession": MessageLookupByLibrary.simpleMessage("اغلاق الجلسة"),
+        "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
         "title": MessageLookupByLibrary.simpleMessage("الأجهزة")
       };
 }

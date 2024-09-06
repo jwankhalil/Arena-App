@@ -1,3 +1,17 @@
 {
-    "title": "Devices"
+    "title": "Devices",
+    "deviceName":"devic name",
+    "deviceType":"devic type",
+    "devicePrice":"hourly price",
+    "customerName":"customer name",
+    "startSession":"start session",
+    "back":"back",
+    "endSession":"close session",
+    "delete":"delete",
+    "edit":"edit",
+    "currency":"l.s / h",
+    "date":"pick a time",
+    "close":"close",
+    "customerBill":"customer bill"
+
 }

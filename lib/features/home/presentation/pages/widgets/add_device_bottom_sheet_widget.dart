@@ -3,6 +3,7 @@ import 'package:arena_management/features/home/data/models/device_model.dart';
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/custom_text_field.dart';
 import 'package:arena_management/features/home/presentation/pages/widgets/save_device_button.dart';
+import 'package:arena_management/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,13 +55,13 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
                       ),
                     ),
                     CustomTextfield(
-                      label: 'اسم الجهاز',
+                      label: S.of(context).deviceName,
                       controller: nameController,
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
-                      decoration: const InputDecoration(
-                        labelText: 'نوع الجهاز',
+                      decoration: InputDecoration(
+                        labelText: S.of(context).deviceType,
                         border: OutlineInputBorder(),
                       ),
                       value: _deviceTypes.contains(_selectedDeviceType)
@@ -80,7 +81,7 @@ class _AddDeviceBottomSheetState extends State<AddDeviceBottomSheet> {
                     ),
                     const SizedBox(height: 16),
                     CustomTextfield(
-                      label: 'سعر الساعة',
+                      label: S.of(context).devicePrice,
                       controller: priceController,
                     ),
                     const SizedBox(height: 24),

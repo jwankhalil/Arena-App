@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:arena_management/core/utils/assets_data.dart';
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
+import 'package:arena_management/features/home/presentation/pages/widgets/drawer_widget.dart';
+import 'package:arena_management/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:arena_management/features/home/presentation/pages/widgets/add_device_bottom_sheet_widget.dart';
@@ -49,16 +51,25 @@ class _HomePageBodyState extends State<HomePageBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            "الأجهزة",
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return DrawerWidget();
+            }));
+          },
+          child: Text(
+            S.of(context).title,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          elevation: 0,
-          forceMaterialTransparency: true,
-          actions: [
-            Image.asset(AssetsData.logo),
-          ]),
+        ),
+        elevation: 0,
+        forceMaterialTransparency: true,
+        actions: [
+          Image.asset(AssetsData.logo),
+        ],
+      ),
       body: const DevicesListView(),
+      drawer: Drawer(child: DrawerWidget()),
       floatingActionButton: const AddDeviceBottomSheet(),
     );
   }

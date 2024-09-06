@@ -7,6 +7,7 @@ import 'package:arena_management/features/home/domain/use_cases/device_usecase/d
 import 'package:arena_management/features/home/domain/use_cases/device_usecase/edit_device_use_case.dart';
 import 'package:arena_management/features/home/domain/use_cases/device_usecase/get_devices_use_case.dart';
 import 'package:arena_management/features/home/presentation/manager/device_cubit/device_cubit.dart';
+import 'package:arena_management/features/home/presentation/manager/lacale_cubit/locale_cubit.dart';
 import 'package:arena_management/router/app_router.dart';
 import 'package:arena_management/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,10 @@ void main() async {
   // Open Hive boxes
   await Hive.openBox<DeviceModel>('devicesBox');
 
-  runApp(const MyApp());
+  runApp(BlocProvider(
+    create: (context) => LocaleCubit(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -48,17 +52,26 @@ class MyApp extends StatelessWidget {
             ..loadDevices(),
         ),
       ],
-      child: MaterialApp.router(
-        locale: const Locale('ar'),
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        debugShowCheckedModeBanner: false,
-        routerConfig: AppRouter.router,
+      child: BlocBuilder<LocaleCubit, Locale>(
+        builder: (context, locale) {
+          return MaterialApp.router(
+            locale: locale,
+
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('ar'),
+            ],
+            // supportedLocales: S.delegate.supportedLocales,
+            debugShowCheckedModeBanner: false,
+            routerConfig: AppRouter.router,
+          );
+        },
       ),
     );
   }
